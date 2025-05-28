@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Picker</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+
+  <body>
+    <div id="left-side-container">
+      <div id="color-card">
+        <p id="selected-color-name">&lt;name&gt;</p>
+        <div id="selected-color"></div>
+      </div>
+    </div>
+    <div id="right-side-container">
+      <div class="color-properties-row"></div>
+      <div class="color-properties-row">
+        <p class="color-property-hint">HEX: #</p>
+        <input type="text" id="hex-input" class="color-property-input" maxlength="6" value="000000"/>
+      </div>
+      <div class="color-properties-row" style="display: none;">
+        <p class="color-property-hint">R:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="255" value="0"/>
+        <p class="color-property-hint">, G:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="255" value="0"/>
+        <p class="color-property-hint">, B:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="255" value="0"/>
+      </div>
+      <div class="color-properties-row">
+        <p class="color-property-hint">H:&nbsp;</p>
+        <input type="number" id="hsl-h-input" class="color-property-input" min="0" max="360" value="0"/>
+        <p class="color-property-hint">, S:&nbsp;</p>
+        <input type="number" id="hsl-s-input" class="color-property-input" min="0" max="100" value="0"/>
+        <p class="color-property-hint">, L:&nbsp;</p>
+        <input type="number" id="hsl-l-input" class="color-property-input" min="0" max="100" value="0"/>
+      </div>
+      <div class="color-properties-row" style="display: none;">
+        <p class="color-property-hint">H:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="360" value="0"/>
+        <p class="color-property-hint">, S:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="100" value="0"/>
+        <p class="color-property-hint">, V/B:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="100" value="0"/>
+      </div>
+      <div class="color-properties-row" style="display: none;">
+        <p class="color-property-hint">H:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="360" value="0"/>
+        <p class="color-property-hint">, C:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="120" value="0"/>
+        <p class="color-property-hint">, T:&nbsp;</p>
+        <input type="number" class="color-property-input" min="0" max="100" value="0"/>
+      </div>
+      <div class="color-properties-row"></div>
+    </div>
+    <script src="./dist/main.js"></script>
+  </body>
+</html>

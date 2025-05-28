@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+:root {
+  /*Source colors*/
+  --primary-color: #ff8b63;
+  --primary-color-t0: #000000;
+  --secondary-color-t100: #ffffff;
+  --secondary-color-t98: #f0fbff;
+  --secondary-color-t96: #e0f8ff;
+  --secondary-color-t85: #74e3ff;
+  --secondary-color-t0: #000000;
+  --neutral-color-t65: #9e9e9e;
+
+  /*Scaffold of the page*/
+  --body-horizontal-margins: 144px;
+  --gap-between-columns: 48px;
+  --column-width: calc(
+    (100vw - var(--body-horizontal-margins) * 2 - var(--gap-between-columns)) / 2
+  );
+
+  /*The left side of the page*/
+  --left-side-bg-color: var(--secondary-color-t85);
+  /*The card with the selected color*/
+  --color-card-shadow-color: var(--secondary-color-t0);
+  --color-card-bg-color: var(--secondary-color-t100);
+  --color-card-max-height: calc(100vh * (2 / 3));
+  --color-card-min-width: calc(var(--column-width) * (2 / 3));
+  --color-card-aspect-ratio: 540 / 732;
+  --color-card-horizontal-margins: calc(var(--column-width) * (1 / 6));
+  --color-card-border-color: var(--secondary-color-t0);
+  --color-card-border-radius: 64px;
+  --color-card-border-width: 8px;
+  /*A name of the selected color*/
+  --selected-color-name-font-family: "Montserrat", sans-serif;
+  --selected-color-name-font-size: 2.5em;
+  --selected-color-name-font-weight: 700;
+  --selected-color-name-font-color: var(--primary-color-t0);
+  --selected-color-name-horizontal-margins: 8px;
+  /*The selected color*/
+  --selected-color-shadow-color: var(--primary-color-t0);
+  --selected-color-bg-color: var(--primary-color);
+  --selected-color-aspect-ratio: 480 / 432;
+  --selected-color-margins: 16px;
+  --selected-color-border-color: var(--primary-color-t0);
+  --selected-color-border-radius: calc(
+    var(--color-card-border-radius) - var(--selected-color-margins)
+  );
+  --selected-color-border-width: 4px;
+
+  /*The right side of the page*/
+  --right-side-bg-color: var(--secondary-color-t0);
+  /*Rows with an editable properties of a selected color*/
+  --color-properties-row-min-height: 4em;
+  --color-properties-row-bg-color: var(--secondary-color-t96);
+  --color-properties-row-border-color: var(--secondary-color-t0);
+  --color-properties-row-border-width: 8px;
+  /*Content of a color properties rows*/
+  --color-property-row-content-horizontal-margins: 16px;
+  --color-property-font-family: "Space Mono", monospace;
+  --color-property-font-size: 2em;
+  --color-property-line-height: 0.3em;
+  --color-property-font-weight: 700;
+  --color-property-hint-font-color: var(--neutral-color-t65);
+  --color-property-input-font-color: var(--secondary-color-t0);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#left-side-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-height: 100vh;
+  background-color: var(--left-side-bg-color);
+  padding-left: var(--body-horizontal-margins);
+  padding-right: calc(var(--gap-between-columns) / 2);
+}
+
+/*TODO: Consider adding a visual hole in right top*/
+#color-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+  max-height: var(--color-card-max-height);
+  min-width: var(--color-card-min-width);
+  aspect-ratio: var(--color-card-aspect-ratio);
+  margin: 0, var(--color-card-horizontal-margins);
+  background-color: var(--color-card-bg-color);
+  border-radius: var(--color-card-border-radius);
+  box-shadow: 12px 12px 0px var(--color-card-shadow-color);
+  border: var(--color-card-border-width) solid var(--color-card-border-color);
+}
+
+#selected-color-name {
+  display: none;
+  font-family: var(--selected-color-name-font-family);
+  font-weight: var(--selected-color-name-font-weight);
+  font-size: var(--selected-color-name-font-size);
+  color: var(--selected-color-name-font-color);
+  margin-left: var(--selected-color-name-horizontal-margins);
+  margin-right: var(--selected-color-name-horizontal-margins);
+  margin-bottom: 0;
+}
+
+#selected-color {
+  height: 60%; /*TODO: Move the value into the variables*/
+  margin: var(--selected-color-margins);
+  background-color: var(--selected-color-bg-color);
+  border-radius: var(--selected-color-border-radius);
+  border: var(--selected-color-border-width) solid
+    var(--selected-color-border-color);
+  box-sizing: border-box;
+}
+
+#right-side-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  flex: 1;
+  min-height: 100vh;
+  background-color: var(--right-side-bg-color);
+}
+
+#right-side-container > *:not(:first-child) {
+  border-top: var(--color-properties-row-border-width) solid
+    var(--color-properties-row-border-color);
+}
+  
+#right-side-container > *:last-child {
+  flex: 1;
+}
+
+div.color-properties-row {
+  display: flex;
+  min-height: var(--color-properties-row-min-height);
+  background-color: var(--color-properties-row-bg-color);
+  border-left: var(--color-properties-row-border-width) solid
+    var(--color-properties-row-border-color);
+  border-right: var(--color-properties-row-border-width) solid
+    var(--color-properties-row-border-color);
+}
+
+div.color-properties-row:hover {
+  background-color: var(--secondary-color-t98);
+}
+
+div.color-properties-row > *:first-child {
+  margin-left: var(--color-property-row-content-horizontal-margins);  
+}
+
+p.color-property-hint,
+input.color-property-input {
+  font-family: var(--color-property-font-family);
+  font-weight: var(--color-property-font-weight);
+  font-size: var(--color-property-font-size);
+  line-height: var(--color-property-line-height);
+}
+
+p.color-property-hint {
+  color: var(--color-property-hint-font-color);
+  /*Make it unselectable*/
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+input.color-property-input {
+  color: var(--color-property-input-font-color);
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
