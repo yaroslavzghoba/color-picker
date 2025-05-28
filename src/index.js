@@ -32,13 +32,13 @@ function useHexToUpdateHsl(hex) {
 
 // Update other color inputs and display a new color using HSL values.
 function onHslUpdated() {
-    const h = document.getElementById('hsl-h-input').value;
-    const s = document.getElementById('hsl-s-input').value;
-    const l = document.getElementById('hsl-l-input').value;
+    const h = parseInt(document.getElementById('hsl-h-input').value);
+    const s = parseInt(document.getElementById('hsl-s-input').value);
+    const l = parseInt(document.getElementById('hsl-l-input').value);
     const hslColorModel = new HslColorModel();
     hslColorModel.fromHsl(h, s, l);
 
-    const hex = hslColorModel.hex;
+    const hex = HexUtils.hexToString(hslColorModel.hex);
     updateHex(hex);
     changeSelectedCode(hex);
 }
