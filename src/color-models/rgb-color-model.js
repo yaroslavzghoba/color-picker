@@ -39,7 +39,7 @@ export class RgbColorModel {
 
 // Check if the value is a number between 0 and 255.
 function validateColorValue(value) {
-    if (typeof value !== 'number' || (value <= 0 || value >= 255) || isNaN(value)) {
+    if (typeof value !== 'number' || (value < 0 || value > 255) || isNaN(value)) {
         throw new Error('Invalid color value. It should be a number between 0 and 255.');
     };
 };

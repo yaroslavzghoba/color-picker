@@ -1,3 +1,4 @@
+import { HctColorModel } from './color-models/hct-color-model';
 import { HslColorModel } from './color-models/hsl-color-model'
 import { RgbColorModel } from './color-models/rgb-color-model';
 import { HexUtils } from './utils/hex-utils';
@@ -13,6 +14,9 @@ const hslLightnessInput = document.getElementById('hsl-l-input');
 const rgbRedInput = document.getElementById('rgb-r-input');
 const rgbGreenInput = document.getElementById('rgb-g-input');
 const rgbBlueInput = document.getElementById('rgb-b-input');
+const hctHueInput = document.getElementById('hct-h-input');
+const hctChromaInput = document.getElementById('hct-c-input');
+const hctToneInput = document.getElementById('hct-t-input');
 
 // Change the selected color in the CSS variable.
 function changeSelectedCode(hexValue) {
@@ -44,6 +48,16 @@ function useHexToUpdateRgb(hex) {
     rgbBlueInput.value = rgbColorModel.blue;
 }
 
+// Update HCT input fields using a HEX code.
+function useHexToUpdateHct(hex) {
+    const hctColorModel = new HctColorModel();
+    hctColorModel.fromHex(HexUtils.stringToHex(hex));
+
+    hctHueInput.value = Math.round(hctColorModel.hue);
+    hctChromaInput.value = Math.round(hctColorModel.chroma);
+    hctToneInput.value = Math.round(hctColorModel.tone);
+}
+
 // Update other color inputs and display a new color using HSL values.
 function onHslUpdated() {
     const h = parseInt(hslHueInput.value);
@@ -55,6 +69,7 @@ function onHslUpdated() {
     const hex = HexUtils.hexToString(hslColorModel.hex);
     updateHex(hex);
     useHexToUpdateRgb(hex);
+    useHexToUpdateHct(hex);
     changeSelectedCode(hex);
 }
 
@@ -69,6 +84,22 @@ function onRgbUpdated() {
     const hex = HexUtils.hexToString(rgbColorModel.hex);
     updateHex(hex);
     useHexToUpdateHsl(hex);
+    useHexToUpdateHct(hex);
+    changeSelectedCode(hex);
+}
+
+// Update other color inputs and display a new color using HCT values.
+function onHctUpdated() {
+    const h = parseInt(hctHueInput.value);
+    const c = parseInt(hctChromaInput.value);
+    const t = parseInt(hctToneInput.value);
+    const hctColorModel = new HctColorModel();
+    hctColorModel.fromHct(h, c, t);
+
+    const hex = HexUtils.hexToString(hctColorModel.hex)
+    updateHex(hex);
+    useHexToUpdateHsl(hex);
+    useHexToUpdateRgb(hex);
     changeSelectedCode(hex);
 }
 
@@ -77,6 +108,7 @@ function onHexUpdated() {
     const hex = hexInput.value;
     useHexToUpdateHsl(hex);
     useHexToUpdateRgb(hex);
+    useHexToUpdateHct(hex);
     changeSelectedCode(hex);
 };
 
@@ -97,7 +129,7 @@ hslLightnessInput.addEventListener('input', function() {
     onHslUpdated()
 });
 
-// Set listeners to linsten for RGB values input
+// Set listeners to listen for RGB values input
 rgbRedInput.addEventListener('input', function() {
     onRgbUpdated()
 });
@@ -106,4 +138,15 @@ rgbGreenInput.addEventListener('input', function() {
 });
 rgbBlueInput.addEventListener('input', function() {
     onRgbUpdated()
+});
+
+// Set listeners to listen for HCT values input
+hctHueInput.addEventListener('input', function() {
+    onHctUpdated()
+});
+hctChromaInput.addEventListener('input', function() {
+    onHctUpdated()
+});
+hctToneInput.addEventListener('input', function() {
+    onHctUpdated()
 });
