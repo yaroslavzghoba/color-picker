@@ -1,5 +1,6 @@
 import { HctColorModel } from './color-models/hct-color-model';
-import { HslColorModel } from './color-models/hsl-color-model'
+import { HslColorModel } from './color-models/hsl-color-model';
+import { HsvColorModel } from './color-models/hsv-color-model';
 import { RgbColorModel } from './color-models/rgb-color-model';
 import { HexUtils } from './utils/hex-utils';
 
@@ -8,12 +9,19 @@ const SELECTED_COLOR_VAR_NAME = '--primary-color';
 const root = document.documentElement;
 // Input fields with color values
 const hexInput = document.getElementById('hex-input');
+// HSL
 const hslHueInput = document.getElementById('hsl-h-input');
 const hslSaturationInput = document.getElementById('hsl-s-input');
 const hslLightnessInput = document.getElementById('hsl-l-input');
+// RGB
 const rgbRedInput = document.getElementById('rgb-r-input');
 const rgbGreenInput = document.getElementById('rgb-g-input');
 const rgbBlueInput = document.getElementById('rgb-b-input');
+// HSV/HSB
+const hsvHueInput = document.getElementById('hsv-h-input');
+const hsvSaturationInput = document.getElementById('hsv-s-input');
+const hsvValueInput = document.getElementById('hsv-v-input');
+// HCT
 const hctHueInput = document.getElementById('hct-h-input');
 const hctChromaInput = document.getElementById('hct-c-input');
 const hctToneInput = document.getElementById('hct-t-input');
@@ -48,6 +56,16 @@ function useHexToUpdateRgb(hex) {
     rgbBlueInput.value = rgbColorModel.blue;
 }
 
+// Update HSV/HSB input fields using a HEX code.
+function useHexToUpdateHsv(hex) {
+    const hsvColorModel = new HsvColorModel();
+    hsvColorModel.fromHex(HexUtils.stringToHex(hex));
+
+    hsvHueInput.value = hsvColorModel.hue;
+    hsvSaturationInput.value = hsvColorModel.saturation;
+    hsvValueInput.value = hsvColorModel.value;
+}
+
 // Update HCT input fields using a HEX code.
 function useHexToUpdateHct(hex) {
     const hctColorModel = new HctColorModel();
@@ -69,6 +87,7 @@ function onHslUpdated() {
     const hex = HexUtils.hexToString(hslColorModel.hex);
     updateHex(hex);
     useHexToUpdateRgb(hex);
+    useHexToUpdateHsv(hex);
     useHexToUpdateHct(hex);
     changeSelectedCode(hex);
 }
@@ -84,6 +103,23 @@ function onRgbUpdated() {
     const hex = HexUtils.hexToString(rgbColorModel.hex);
     updateHex(hex);
     useHexToUpdateHsl(hex);
+    useHexToUpdateHsl(hex);
+    useHexToUpdateHct(hex);
+    changeSelectedCode(hex);
+}
+
+// Update other color inputs and display a new color using HSV/HSB values.
+function onHsvUpdated() {
+    const h = parseInt(hsvHueInput.value);
+    const s = parseInt(hsvSaturationInput.value);
+    const v = parseInt(hsvValueInput.value);
+    const hsvColorModel = new HsvColorModel();
+    hsvColorModel.fromHsv(h, s, v);
+
+    const hex = HexUtils.hexToString(hctColorModel.hex)
+    updateHex(hex);
+    useHexToUpdateHsl(hex);
+    useHexToUpdateRgb(hex);
     useHexToUpdateHct(hex);
     changeSelectedCode(hex);
 }
@@ -100,6 +136,7 @@ function onHctUpdated() {
     updateHex(hex);
     useHexToUpdateHsl(hex);
     useHexToUpdateRgb(hex);
+    useHexToUpdateHsv(hex);
     changeSelectedCode(hex);
 }
 
@@ -108,6 +145,7 @@ function onHexUpdated() {
     const hex = hexInput.value;
     useHexToUpdateHsl(hex);
     useHexToUpdateRgb(hex);
+    useHexToUpdateHsv(hex);
     useHexToUpdateHct(hex);
     changeSelectedCode(hex);
 };
@@ -140,13 +178,24 @@ rgbBlueInput.addEventListener('input', function() {
     onRgbUpdated()
 });
 
+// Set listeners to listen for HSV/HSB values input
+hsvHueInput.addEventListener('input', function() {
+    onHctUpdated()
+});
+hsvSaturationInput.addEventListener('input', function() {
+    onHctUpdated()
+});
+hsvValueInput.addEventListener('input', function() {
+    onHctUpdated()
+});
+
 // Set listeners to listen for HCT values input
 hctHueInput.addEventListener('input', function() {
-    onHctUpdated()
+    onHsvUpdated()
 });
 hctChromaInput.addEventListener('input', function() {
-    onHctUpdated()
+    onHsvUpdated()
 });
 hctToneInput.addEventListener('input', function() {
-    onHctUpdated()
+    onHsvUpdated()
 });
