@@ -2,7 +2,7 @@ name: Deployment
 
 on:
   push:
-    branches: ["feature/deployment"]  # TODO: Replace with `main`
+    branches: ["main"]
 
 # Sets permissions to allow deployment to GitHub Pages
 permissions:
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (if your project uses Node.js, e.g., for a static site generator)
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -38,9 +38,7 @@ jobs:
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          # Path to your static site files.
-          # Change 'dist' to the directory where your build command outputs the static files.
-          path: './dist' # IMPORTANT: Ensure this path matches your build output directory
+          path: './dist'
 
   deploy:
     environment:
