@@ -113,10 +113,12 @@ function onHsvUpdated() {
     const h = parseInt(hsvHueInput.value);
     const s = parseInt(hsvSaturationInput.value);
     const v = parseInt(hsvValueInput.value);
+    console.log("HSV/HSB updated. H: %d, S: %d, V/B: %d", h, s, v)
     const hsvColorModel = new HsvColorModel();
     hsvColorModel.fromHsv(h, s, v);
 
-    const hex = HexUtils.hexToString(hctColorModel.hex)
+    const hex = HexUtils.hexToString(hsvColorModel.hex)
+    console.log("Calculated HEX: #%s", hex)
     updateHex(hex);
     useHexToUpdateHsl(hex);
     useHexToUpdateRgb(hex);
@@ -180,22 +182,22 @@ rgbBlueInput.addEventListener('input', function() {
 
 // Set listeners to listen for HSV/HSB values input
 hsvHueInput.addEventListener('input', function() {
-    onHctUpdated()
+    onHsvUpdated()
 });
 hsvSaturationInput.addEventListener('input', function() {
-    onHctUpdated()
+    onHsvUpdated()
 });
 hsvValueInput.addEventListener('input', function() {
-    onHctUpdated()
+    onHsvUpdated()
 });
 
 // Set listeners to listen for HCT values input
 hctHueInput.addEventListener('input', function() {
-    onHsvUpdated()
+    onHctUpdated()
 });
 hctChromaInput.addEventListener('input', function() {
-    onHsvUpdated()
+    onHctUpdated()
 });
 hctToneInput.addEventListener('input', function() {
-    onHsvUpdated()
+    onHctUpdated()
 });
